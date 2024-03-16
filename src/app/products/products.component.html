@@ -1,0 +1,173 @@
+<div class="container-fuild">
+    <div class="card">
+        <div class="card-header bg-color">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1>Products</h1>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-info" data-toggle="modal" data-target="#exampleModalCenter">Add Products</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <th>Id</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Action</th>
+                <tbody>
+                    @for (product of products; track product.id) {
+                    <tr>
+                        <td>{{product.id}}</td>
+                        <td>{{product.title}}</td>
+                        <td>{{product.price}}</td>
+                        <td>{{product.stock}}</td>
+                        <td><button class="btn btn-info" (click)="edit(product.id)" data-toggle="modal" data-target="#exampleModalCenter1">Edit</button>&nbsp;&nbsp;<button (click)="deleteProduct(product.id)"  class="btn btn-info">Delete</button></td>
+                    </tr>
+                }
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title" id="exampleModalLongTitle">Add Product</h1>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form class="example-form">
+                <mat-form-field class="example-full-width">
+                  <mat-label>Id</mat-label>
+                  <input type="number" matInput [formControl]="idFormControl" [errorStateMatcher]="matcher"
+                         placeholder="11">
+                  <mat-hint>Errors appear instantly!</mat-hint>
+                  @if (idFormControl.hasError('id') && !idFormControl.hasError('required')) {
+                    <mat-error>Please enter a valid Id</mat-error>
+                  }
+                  @if (idFormControl.hasError('required')) {
+                    <mat-error>Id is <strong>required</strong></mat-error>
+                  }
+                </mat-form-field>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Title</mat-label>
+                    <input type="text" matInput [formControl]="titleFormControl" [errorStateMatcher]="matcher"
+                           placeholder="iphone">
+                    <mat-hint>Errors appear instantly!</mat-hint>
+                    @if (titleFormControl.hasError('id') && !titleFormControl.hasError('required')) {
+                      <mat-error>Please enter a valid Title</mat-error>
+                    }
+                    @if (titleFormControl.hasError('required')) {
+                      <mat-error>Title is <strong>required</strong></mat-error>
+                    }
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Price</mat-label>
+                    <input type="number" matInput [formControl]="priceFormControl" [errorStateMatcher]="matcher"
+                           placeholder="">
+                    <mat-hint>Errors appear instantly!</mat-hint>
+                    @if (priceFormControl.hasError('id') && !priceFormControl.hasError('required')) {
+                      <mat-error>Please enter a valid Price</mat-error>
+                    }
+                    @if (priceFormControl.hasError('required')) {
+                      <mat-error>Price is <strong>required</strong></mat-error>
+                    }
+                  </mat-form-field>
+                  <mat-form-field class="example-full-width">
+                    <mat-label>Stock</mat-label>
+                    <input type="number" matInput [formControl]="stockFormControl" [errorStateMatcher]="matcher"
+                           placeholder="">
+                    <mat-hint>Errors appear instantly!</mat-hint>
+                    @if (stockFormControl.hasError('id') && !stockFormControl.hasError('required')) {
+                      <mat-error>Please enter a valid Stock</mat-error>
+                    }
+                    @if (stockFormControl.hasError('required')) {
+                      <mat-error>Stock is <strong>required</strong></mat-error>
+                    }
+                  </mat-form-field>
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-info" (click)="addProduct()" >Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title" id="exampleModalLongTitle">Add Product</h1>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Id</mat-label>
+                      <input type="number" value="{{productById.id}}" matInput [formControl]="idFormControl" [errorStateMatcher]="matcher"
+                             placeholder="11">
+                      <mat-hint>Errors appear instantly!</mat-hint>
+                      @if (idFormControl.hasError('id') && !idFormControl.hasError('required')) {
+                        <mat-error>Please enter a valid Id</mat-error>
+                      }
+                      @if (idFormControl.hasError('required')) {
+                        <mat-error>Id is <strong>required</strong></mat-error>
+                      }
+                    </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Title</mat-label>
+                        <input type="text" value="{{productById.title}}" matInput [formControl]="titleFormControl" [errorStateMatcher]="matcher"
+                               placeholder="iphone">
+                        <mat-hint>Errors appear instantly!</mat-hint>
+                        @if (titleFormControl.hasError('id') && !titleFormControl.hasError('required')) {
+                          <mat-error>Please enter a valid Title</mat-error>
+                        }
+                        @if (titleFormControl.hasError('required')) {
+                          <mat-error>Title is <strong>required</strong></mat-error>
+                        }
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Price</mat-label>
+                        <input type="number" value="{{productById.price}}" matInput [formControl]="priceFormControl" [errorStateMatcher]="matcher"
+                               placeholder="">
+                        <mat-hint>Errors appear instantly!</mat-hint>
+                        @if (priceFormControl.hasError('id') && !priceFormControl.hasError('required')) {
+                          <mat-error>Please enter a valid Price</mat-error>
+                        }
+                        @if (priceFormControl.hasError('required')) {
+                          <mat-error>Price is <strong>required</strong></mat-error>
+                        }
+                      </mat-form-field>
+                      <mat-form-field class="example-full-width">
+                        <mat-label>Stock</mat-label>
+                        <input type="number" value="{{productById.stock}}" matInput [formControl]="stockFormControl" [errorStateMatcher]="matcher"
+                               placeholder="">
+                        <mat-hint>Errors appear instantly!</mat-hint>
+                        @if (stockFormControl.hasError('id') && !stockFormControl.hasError('required')) {
+                          <mat-error>Please enter a valid Stock</mat-error>
+                        }
+                        @if (stockFormControl.hasError('required')) {
+                          <mat-error>Stock is <strong>required</strong></mat-error>
+                        }
+                      </mat-form-field>
+                  </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-info" (click)="editProduct()" >Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
